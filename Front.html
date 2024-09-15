@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise Sync</title>
+    <style>
+        /* General styles for the entire page */
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Roboto', sans-serif; /* Apply Roboto font */
+            background-color: #f5f5f5; /* Background color */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Styles for the header */
+        .header {
+            position: fixed; /* Keeps the header fixed at the top-left corner */
+            top: 20px;
+            left: 20px;
+            font-size: 24px; /* Adjust font size as needed */
+            color: white; /* Change text color to white */
+            font-weight: bold;
+            
+            padding: 10px 20px; /* Add padding for better spacing */
+            border-radius: 5px; /* Optional: Add rounded corners */
+            display: flex;
+            align-items: center; /* Center content vertically */
+        }
+
+        /* Styles for the image in the header */
+        .header img {
+            max-width: 200px; /* Adjust size as needed */
+            height: auto;
+            margin-right: 10px; /* Space between image and text */
+        }
+
+        /* Container styling for content */
+        .container {
+            text-align: left;
+            padding: 40px;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 900px;
+            background-color: #f5f5f5; /* Same color as the background */
+        }
+
+        /* Styles for each exercise section */
+        .exercise {
+            margin-bottom: 60px;
+        }
+
+        /* Styles for exercise descriptions */
+        .exercise p {
+            margin: 5px 0;
+        }
+        /* Styles for checkboxes */
+        .exercise input[type="checkbox"] {
+            float: right; /* Move checkbox to the left of the label */
+            margin-left: 5px; /* Space between checkbox and label */
+        }   
+        
+        /* Styles for buttons */
+        button {
+            padding: 20px 80px;
+            background-color: #B22222; /* Button background color */
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-left: 10px;
+
+        }
+
+        /* Hover effect for buttons */
+        button:hover {
+            background-color: #ff0000;
+        }
+
+        /* Specific style for the cancel button */
+        #cancelButton {
+            background-color: #B22222; /* Cancel button background color */
+            margin-left: 0;
+            margin-right: 400px;
+        }
+
+        /* Hover effect for the cancel button */
+        #cancelButton:hover {
+            background-color: #ff0000;
+        }
+
+        /* Container for buttons to center them */
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header for the page -->
+    <div class="header">    
+        <img src="Footballeyeq.png">
+        
+    </div>
+
+    <!-- Main content container -->
+    <div class="container">
+        <!-- Exercise 1 -->
+        <div class="exercise">
+            <input type="checkbox" id="exercise1">
+            <label for="exercise1">Exercise 1</label>
+            <p>In dribbling drills, players weave through cones while maintaining close control of the ball. The focus is on using both feet, keeping touches quick, and improving agility. This exercise helps players maneuver in tight spaces and control the ball under pressure, simulating in-game scenarios where defenders are nearby.</p>
+        </div>
+
+        <!-- Exercise 2 -->
+        <div class="exercise">
+            <input type="checkbox" id="exercise2">
+            <label for="exercise2">Exercise 2</label>
+            <p>Players pass the ball quickly between teammates set up in a circle or grid. This drill improves passing accuracy, timing, and communication. Variations like one-touch passing or adding defenders make it more challenging. It enhances a player’s spatial awareness and decision-making in real-game situations.</p>
+        </div>
+
+        <!-- Exercise 3 -->
+        <div class="exercise">
+            <input type="checkbox" id="exercise3">
+            <label for="exercise3">Exercise 3</label>
+            <p>Players take shots from different angles and distances, working on technique, accuracy, and power. The focus is on body positioning and follow-through. Adding defenders or moving targets can simulate game conditions, helping players develop versatility and confidence in front of goal.</p>
+        </div>
+
+        <!-- Exercise 4 -->
+        <div class="exercise">
+            <input type="checkbox" id="exercise4">
+            <label for="exercise4">Exercise 4</label>
+            <p>Players are divided into small teams (e.g., 3v3 or 4v4) and play on a smaller field with mini-goals or normal goals. This drill emphasizes quick decision-making, teamwork, and ball control under pressure. The smaller space and fewer players ensure more touches on the ball, promoting improved dribbling, passing, and movement off the ball. Variations can include touch restrictions (e.g., two-touch play) or limited time to score, simulating high-pressure, real-game situations.</p>
+        </div>
+
+        <!-- Exercise 5 -->
+        <div class="exercise">
+            <input type="checkbox" id="exercise5">
+            <label for="exercise5">Exercise 5</label>
+            <p>One player acts as the attacker, trying to dribble past the defender and score on a small goal or target. The defender must maintain their stance, anticipate movements, and tackle cleanly. This drill enhances both defensive and attacking skills, with attackers focusing on creativity and control, while defenders work on positioning, timing, and reading the game.</p>
+        </div>
+
+        <!-- Button container with Cancel and Sync buttons -->
+        <div class="button-container">
+            <button id="cancelButton">Cancel</button>
+            <button id="syncButton">Sync</button>
+        </div>
+    </div>
+
+    <script>
+// Add event listener for the Sync button
+document.getElementById("syncButton").addEventListener("click", () => {
+    // Array to hold the names of checked exercises
+    const checkedExercises = [];
+    
+    // Loop through all exercises to check which are selected
+    for (let i = 1; i <= 5; i++) {
+        if (document.getElementById(`exercise${i}`).checked) {
+            checkedExercises.push(`Exercise ${i}`);
+        }
+    }
+    
+    // Check if any exercises are selected
+    if (checkedExercises.length === 0) {
+        alert("Please select some exercises.");
+        return; // Exit the function if no exercises are selected
+    }
+    
+    // Alert to simulate backend error (keep this line if needed for debugging)
+    alert("Sync Succesfull !!! ");
+    
+
+            // Send the checked exercises to the backend via a POST request
+            fetch("/sync-exercises", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ exercises: checkedExercises })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert("Exercises synced successfully!");
+                } else {
+                    alert("Error syncing exercises.");
+                }
+            });
+        });
+
+        // Add event listener for the Cancel button
+        document.getElementById("cancelButton").addEventListener("click", () => {
+            // Uncheck all exercise checkboxes
+            for (let i = 1; i <= 5; i++) {
+                document.getElementById(`exercise${i}`).checked = false;
+            }
+        });
+    </script>
+
+</body>
+</html>
